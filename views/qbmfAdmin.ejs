@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="keywords" content="">
+    <title>趋数服务市场后台管理</title>
+    <link rel="stylesheet" type="text/css" href="lib/materialize/css/materialize.min.css" />
+    <link rel="stylesheet" type="text/css" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="lib/angular-1.5.5/angular.js" type="text/javascript" charset="utf-8"></script>
+    <style type="text/css" media="screen">
+    body{
+      background-color:#F3F7FA;
+    }
+    nav {
+        background: #03A9F3;
+    }
+    .container .card .card-action a:not(.btn):not(.btn-large):not(.btn-floating){
+      color: #039be5;
+    }
+    .container .card .card-action a:hover{
+      opacity: .7;
+    }
+    
+    .footer {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background: #EAEEF1;
+    }
+    .footer .chat-us dd{
+      line-height: 30px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="javascript:void(0)" class="brand-logo hide-on-small-only">trend-data</a>
+                <a href="javascript:void(0)" class="brand-logo center">趋数服务市场</a>                
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <div ui-view></div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m8">
+                    <dl class="chat-us">
+                        <!-- <dt>杭州趋数网络科技有限公司</dt> -->
+                        <dd><i class="fa fa-map-marker"></i> 杭州市西湖区塘苗路18号华星现代产业园D座D-601</dd>
+                        <dd><i class="fa fa-phone"></i>0571-87986150</dd>
+                        <dd><i class="fa fa-envelope"></i>service@trend-data.cn</dd>
+                    </dl>
+                </div>
+                <div class="col s12 m4 center">
+                    <img width="120" height="120" src="http://www.qushubi.com/images/weixi.png" alt="微信公众号">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="lib/jquery-1.11.3.min.js"></script>
+    <script>
+        
+        (function(){
+            angular.module('app',['ui.router']);
+
+
+            angular.module('app').config(['$urlRouterProvider', '$stateProvider', '$locationProvider',function($urlRouterProvider,$stateProvider,$locationProvider){
+
+                $urlRouterProvider.otherwise('/login');
+
+                $stateProvider.state('login', {
+                    url: '/login',
+                    template: '<h1 class="title">登录</h1><div class="divider mb8"></div><div class="input-field col s12"><input id="username" type="text" class="validate" name="nick" ng-model="vm.user.name" /><label for="username" class="active">用户名</label></div><div class="input-field col s12"><input id="password" type="password" class="validate" name="password" ng-class="{'invalid': vm.error.error}" ng-model="vm.user.password" /><label for="password" class="active" data-error="{{vm.error.info}}">密码</label></div><div class="col s12 clearfix"><input type="checkbox" id="user-remember" class="filled-in" checked="checked" ng-model="vm.user.isRemember" /><label for="user-remember">记住我</label><a href="forget.html" class="ml20 hover-underline right">忘记密码？</a></div><div class="col s12"><button class="waves-effect waves-light btn col s12 hoverable" ng-click="vm.user.submit()" style="">登 录</button></div>',
+                    controller: ['$timeout',function($timeout){
+
+                    }],
+                    controllerAs: 'vm'
+                }).state('index', {
+                    url: '/index',
+                    templateUrl: 'app/controllers/brand.controller/brand.controller.html',
+                    controller: 'brandCtrl',
+                    controllerAs: 'vm',
+                    resolve: {
+                        user: ['userService', function(userService) {
+                            return userService.getUser();
+                        }]
+                    }
+                }).state('edit', {
+                    url: '/shop',
+                    params: { store: null },
+                    templateUrl: 'app/controllers/shop.controller/shop.controller.html',
+                    controller: 'shopCtrl',
+                    controllerAs: 'vm',
+                    resolve: {
+                        user: ['userService', function(userService) {
+                            return userService.getUser();
+                        }]
+                    }
+                });
+
+            }]);
+
+
+        })();
+    </script>
+
+</body>
+
+</html>

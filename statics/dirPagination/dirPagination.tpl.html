@@ -1,0 +1,21 @@
+<ul class="pagination" ng-if="0 < pages.length || !autoHide">
+    <!-- 首页 -->
+    <li ng-if="boundaryLinks" ng-class="{ disabled : pagination.current == 1 ,'waves-effect':true}" ng-click="setCurrent(1)">
+        <a>首页</a>
+    </li>
+    <!-- 上一页 -->
+    <li ng-if="directionLinks" ng-class="{ disabled : pagination.current == 1 ,'waves-effect':true}" ng-click="setCurrent(pagination.current - 1)">
+        <a title="上一页"><i class="fa fa-angle-left"></i></a>
+    </li>
+    <li ng-repeat="pageNumber in pages track by $index" ng-class="{ active : pagination.current == pageNumber, disabled : pageNumber == '...','waves-effect':true }" ng-click="setCurrent(pageNumber)">
+        <a>{{ pageNumber }}</a>
+    </li>
+    <!-- 下一页 -->
+    <li ng-if="directionLinks" ng-class="{ disabled : pagination.current == pagination.last,'waves-effect':true }" ng-click="setCurrent(pagination.current + 1)">
+        <a title="下一页"><i class="fa fa-angle-right"></i></a>
+    </li>
+    <!-- 尾页 -->
+    <li ng-if="boundaryLinks" ng-class="{ disabled : pagination.current == pagination.last,'waves-effect':true }" ng-click="setCurrent(pagination.last)">
+        <a> 尾页</a>
+    </li>
+</ul>
